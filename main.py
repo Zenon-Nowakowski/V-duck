@@ -94,8 +94,6 @@ async def play(ctx, video_url):
             await ctx.send(f'Playing {video_url} in the voice channel.')
         except Exception as e:
             await ctx.send(f'An error occurred while playing the video: {str(e)}')
-        finally:
-            await voice_client.disconnect()
     else:
         await ctx.send("You need to be in a voice channel to use this command.")
     await ctx.message.delete()
