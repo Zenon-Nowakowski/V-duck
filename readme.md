@@ -11,3 +11,9 @@ The bot requires the following dependencies:
 ```shell 
 pip install discord pynacl
 ```
+# Future plans 
+- Meme implementation 
+   - Copy pasta command
+- Word banning 
+   - Ban/mute VC users based on word uttered 
+- Media player
