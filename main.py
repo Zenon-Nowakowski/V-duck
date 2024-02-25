@@ -3,6 +3,7 @@
 import discord
 from discord.ext import commands
 import random
+from internal import token
 
 description = '''An example bot to showcase the discord.ext.commands extension
 module.
@@ -74,4 +75,4 @@ async def _bot(ctx):
     """Is the bot cool?"""
     await ctx.send('Yes, the bot is cool.')
 
-bot.run('MTIxMTM3MDYzOTgyMzQ3ODg5NA.GKEMoB.cqWEtfqxzLuWvSWnVtoT_qfrLkwWOUbXqvi-M0')
+bot.run(token)
