@@ -8,13 +8,15 @@ from internal import token
 description = '''An example bot to showcase the discord.ext.commands extension
 module.
 
-There are a number of utility commands being showcased here.'''
+There are a number of utility commands being showcased here.
+The command prefix is `:V ` (including the white space after :V).
+'''
 
 intents = discord.Intents.default()
 intents.members = True
 intents.message_content = True
 
-bot = commands.Bot(command_prefix='?', description=description, intents=intents)
+bot = commands.Bot(command_prefix=':V ', description=description, intents=intents)
 
 
 @bot.event
