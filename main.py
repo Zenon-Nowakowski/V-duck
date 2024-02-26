@@ -5,10 +5,13 @@ from discord.ext import commands
 import random
 from internal import token
 import subprocess
+import math 
+import random 
+import json 
 
-description = '''An example bot to showcase the discord.ext.commands extension
-module.
-There are a number of utility commands being showcased here.
+pastas = open('copypasta.json', 'r')
+
+description = '''This is V-duck, a silly discord bot. 
 The command prefix is `:V ` (including the white space after :V).
 '''
 
@@ -58,6 +61,7 @@ async def joined(ctx, member: discord.Member):
 @bot.command()
 @commands.has_permissions(administrator=True)
 async def echo(ctx, *, content):
+    '''basic echo command, by use of admins only'''
     await ctx.send(content)
     await ctx.message.delete()
 
@@ -81,10 +85,20 @@ async def leave(ctx):
         await ctx.send("I am not connected to a voice channel ?:/")
     await ctx.message.delete()
 
+@bot.command()
+async def copypasta(ctx):
+    '''sends a message of a random copy pasta from the json file'''
+    with open("copypasta.json") as jsonFile:
+        mega = json.load(jsonFile)
+        data = mega["copyastas"]
+    message = f"# {random.choice(data)['name']}\n{random.choice(data)['text']}"
+    await ctx.send(message)
+    await ctx.message.delete()
+
 #work in progress
 @bot.command()
 async def play(ctx, video_url):
-    '''Play a song from YouTube'''
+    '''Play a video from any url'''
     voice_channel = ctx.author.voice.channel
     if voice_channel:
         voice_client = await voice_channel.connect()
