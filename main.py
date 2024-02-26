@@ -91,7 +91,8 @@ async def copypasta(ctx):
     with open("copypasta.json") as jsonFile:
         mega = json.load(jsonFile)
         data = mega["copyastas"]
-    message = f"# {random.choice(data)['name']}\n{random.choice(data)['text']}"
+        random.choice(data)
+    message = f"# {(data)['name']}\n{(data)['text']}"
     await ctx.send(message)
     await ctx.message.delete()
 
