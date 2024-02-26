@@ -16,4 +16,7 @@ pip install discord pynacl
    - Copy pasta command
 - Word banning 
    - Ban/mute VC users based on word uttered 
+   - time out
 - Media player
+- Reply to @'s
+   - insults you 
