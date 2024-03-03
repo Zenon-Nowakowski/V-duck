@@ -30,12 +30,21 @@ The bot requires the following dependencies:
 ```shell 
 pip install discord pynacl
 ```
+# Features 
+- Word filtering: 
+   - In the internal.json file there shoud be a filtered_strings array, which will be read and any message containing a filtered word will result in an automatic timeout. 
+- Dice rolling 
+   - Simple NdN format
+- echo 
+   - the echo command will, echo, whatever the string following the command is 
+- leave/join 
+   - can join and leave voicecall (essentially subcommands code for use in more complex systems such as the play command)
 # Future plans 
 - Meme implementation 
    - Copy pasta command
-- Word banning 
-   - Ban/mute VC users based on word uttered 
-   - time out
+- Voice filtering 
+   - Intake user voice and timeout users who say certain words
+- Better dice rolling (modifiers and giving totals)
 - Media player
 - Reply to @'s
    - insults you 
