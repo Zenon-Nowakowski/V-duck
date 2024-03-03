@@ -3,21 +3,10 @@
 import discord
 from discord.ext import commands
 import random
-import subprocess
-import math 
 import random 
 import json 
 import string
 import datetime
-
-# load in json file 
-# import internals from json
-with open('internal.json') as jsonFile:
-     data = json.load(jsonFile)
-     token = data['token']
-     filtered_strings = data['filtered_strings']
-# also import copypasta.json
-pastas = open('copypasta.json', 'r')
 
 description = '''This is V-duck, a silly discord bot. 
 The command prefix is `:V ` (including the white space after :V).
@@ -28,6 +17,15 @@ intents.members = True
 intents.message_content = True
 
 bot = commands.Bot(command_prefix=':V ', description=description, intents=intents)
+
+# load in json file 
+# import internals from json
+with open('internal.json') as jsonFile:
+    data = json.load(jsonFile)
+    token = data['token']
+    filtered_strings = data['filtered_strings']
+# also import copypasta.json
+pastas = open('copypasta.json', 'r')
 
 # Events 
 
@@ -48,8 +46,8 @@ async def on_message(message):
         # if the word is in the filtered strings, delete the message and send a warning to the user
         if word in filtered_strings:
             await message.delete()
-            await message.channel.send(f'{message.author.mention}, what is wrong with you? That string is *not* allowed! Go to timeout!')
-            await message.author.timeout(duration, reason="Do not mention 'the bear'")
+            await message.channel.send(f'{message.author.mention}, what is wrong with you? That word is *not* allowed! Go to timeout!')
+            await message.author.timeout(duration, reason="Do not do that again >:(")
     # a simple reply to any mentions of the bot (for future use with bardbot)
     if bot.user.mentioned_in(message):
         await message.channel.send("Do not @ me")
@@ -135,25 +133,6 @@ async def copypasta(ctx):
         pasta = random.choice(data)
     message = f"# {(pasta)['name']}\n{(pasta)['text']}"
     await ctx.send(message)
-    await ctx.message.delete()
-
-#work in progress
-@bot.command()
-async def play(ctx, video_url):
-    '''Play a video from any url'''
-    # Check if the user is in a voice channel
-    voice_channel = ctx.author.voice.channel
-    if voice_channel:
-        voice_client = await voice_channel.connect()
-        # open the video using the default media player on the host machine, linux only
-        try:
-            # Open the video using the default media player on the host machine
-            subprocess.Popen(['xdg-open', video_url])
-            await ctx.send(f'Playing {video_url} in the voice channel.')
-        except Exception as e:
-            await ctx.send(f'An error occurred while playing the video: {str(e)}')
-    else:
-        await ctx.send("You need to be in a voice channel to use this command.")
     await ctx.message.delete()
 
 bot.run(token)
