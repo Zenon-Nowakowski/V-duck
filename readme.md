@@ -33,6 +33,7 @@ pip install discord pynacl
 # Features 
 - Word filtering: 
    - In the internal.json file there shoud be a filtered_strings array, which will be read and any message containing a filtered word will result in an automatic timeout. 
+   - Filtering is prossessed through filteralg.py and must be similar by a factor of 80% to the filter list in order to be filtered. 
 - Dice rolling 
    - Simple NdN format
 - echo 
@@ -40,7 +41,7 @@ pip install discord pynacl
 - leave/join 
    - can join and leave voicecall (essentially subcommands code for use in more complex systems such as the play command)
 - Responds to @ mentions
-# Future plans 
+# TODO
 - Meme implementation 
    - Copy pasta command
 - Voice filtering 
@@ -49,3 +50,8 @@ pip install discord pynacl
 - Media player
 - Reply to @'s
    - insults you 
+- Improve filtering
+   - remove excessive lettering 
+   - remove excess spacing exploit 
+- Polling
+- React rolls 
