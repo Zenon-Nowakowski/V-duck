@@ -3,12 +3,18 @@
 import discord
 from discord.ext import commands
 import random
-from internal import token
 import subprocess
 import math 
 import random 
 import json 
 
+# load in json file 
+# import internals from json
+with open('internal.json') as jsonFile:
+     data = json.load(jsonFile)
+     token = data['token']
+     filtered_strings = data['filtered_strings']
+# also import copypasta.json
 pastas = open('copypasta.json', 'r')
 
 description = '''This is V-duck, a silly discord bot. 
@@ -20,6 +26,8 @@ intents.members = True
 intents.message_content = True
 
 bot = commands.Bot(command_prefix=':V ', description=description, intents=intents)
+
+# Events
 
 @bot.event
 async def on_ready():
@@ -83,6 +91,12 @@ async def leave(ctx):
         await voice_channel_source.disconnect()
     else:
         await ctx.send("I am not connected to a voice channel ?:/")
+    await ctx.message.delete()
+
+@bot.command()
+async def filter_list(ctx):
+    '''Shows the list of filtered strings'''
+    await ctx.send(f'Filtered strings: {filtered_strings}')
     await ctx.message.delete()
 
 @bot.command()
