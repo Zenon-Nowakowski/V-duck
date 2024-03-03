@@ -8,6 +8,7 @@ import json
 import string
 import datetime
 from filteralg import filtering_algorithm
+import string
 
 description = '''This is V-duck, a silly discord bot. 
 The command prefix is `:V ` (including the white space after :V).
@@ -41,7 +42,9 @@ async def on_message(message):
     duration = datetime.timedelta(seconds=30)
     # Convert the message to lowercase and remove punctuation, then check if it contains any of the filtered strings
     # scan the message word by word to see if the message contains any of the filtered strings
-    if filtering_algorithm(message.content.lower(), message.author):
+    msg = message.content.lower()
+    msg = msg.translate(str.maketrans('', '', string.punctuation))
+    if filtering_algorithm(msg, message.author):
         await message.delete()
         await message.channel.send(f'{message.author.mention}, what is wrong with you? That word is *not* allowed! Go to timeout!')
         await message.author.timeout(duration, reason="Do not do that again >:(")

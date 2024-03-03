@@ -1,5 +1,6 @@
 import difflib
 import json
+import string
 
 def filtering_algorithm(message, user):
     with open("internal.json") as jsonFile:
