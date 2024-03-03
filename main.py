@@ -7,6 +7,7 @@ import random
 import json 
 import string
 import datetime
+from filteralg import filtering_algorithm
 
 description = '''This is V-duck, a silly discord bot. 
 The command prefix is `:V ` (including the white space after :V).
@@ -39,15 +40,11 @@ async def on_message(message):
     # preset the timeout time (30 seconds)
     duration = datetime.timedelta(seconds=30)
     # Convert the message to lowercase and remove punctuation, then check if it contains any of the filtered strings
-    scannedmsg = message.content.lower()
-    scannedmsg = scannedmsg.translate(str.maketrans('', '', string.punctuation))
     # scan the message word by word to see if the message contains any of the filtered strings
-    for word in scannedmsg.split():
-        # if the word is in the filtered strings, delete the message and send a warning to the user
-        if word in filtered_strings:
-            await message.delete()
-            await message.channel.send(f'{message.author.mention}, what is wrong with you? That word is *not* allowed! Go to timeout!')
-            await message.author.timeout(duration, reason="Do not do that again >:(")
+    if filtering_algorithm(message.content.lower(), message.author):
+        await message.delete()
+        await message.channel.send(f'{message.author.mention}, what is wrong with you? That word is *not* allowed! Go to timeout!')
+        await message.author.timeout(duration, reason="Do not do that again >:(")
     # a simple reply to any mentions of the bot (for future use with bardbot)
     if bot.user.mentioned_in(message):
         await message.channel.send("Do not @ me")
