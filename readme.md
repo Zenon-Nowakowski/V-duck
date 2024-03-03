@@ -40,18 +40,25 @@ pip install discord pynacl
    - the echo command will, echo, whatever the string following the command is 
 - leave/join 
    - can join and leave voicecall (essentially subcommands code for use in more complex systems such as the play command)
-- Responds to @ mentions
+- Responds to @ mentions (currently very limited)
+- Copypasta
+   - A user may ask the bot to provide a copypasta from internals
 # TODO
 - Meme implementation 
-   - Copy pasta command
+   - Better copy pasta generation (api/web)
+   - Generate memes dynamically 
 - Voice filtering 
    - Intake user voice and timeout users who say certain words
 - Better dice rolling (modifiers and giving totals)
 - Media player
-- Reply to @'s
-   - insults you 
+   - play mp4 from source URL
+- Reply to @'s more dynamically
+   - Chat bot, most likely utilizing Googles Gemini
 - Improve filtering
    - remove excessive lettering 
    - remove excess spacing exploit 
 - Polling
 - React rolls 
+- Image identification 
+   - Connect to API of bannable images 
+   - Create a ML algorithm to identify pictures and timeout users for posting them
