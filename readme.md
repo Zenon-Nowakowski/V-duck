@@ -39,6 +39,7 @@ pip install discord pynacl
    - the echo command will, echo, whatever the string following the command is 
 - leave/join 
    - can join and leave voicecall (essentially subcommands code for use in more complex systems such as the play command)
+- Responds to @ mentions
 # Future plans 
 - Meme implementation 
    - Copy pasta command

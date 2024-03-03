@@ -29,13 +29,35 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix=':V ', description=description, intents=intents)
 
-# Events
+# Events 
+
+@bot.event
+async def on_message(message):
+    # this await ensures that the bot will wait and thus be able to continue processing commands
+    await bot.process_commands(message)
+    # if the message is from the bot, ignore it
+    if message.author == bot.user:
+        return
+    # preset the timeout time (30 seconds)
+    duration = datetime.timedelta(seconds=30)
+    # Convert the message to lowercase and remove punctuation, then check if it contains any of the filtered strings
+    scannedmsg = message.content.lower()
+    scannedmsg = scannedmsg.translate(str.maketrans('', '', string.punctuation))
+    # scan the message word by word to see if the message contains any of the filtered strings
+    for word in scannedmsg.split():
+        # if the word is in the filtered strings, delete the message and send a warning to the user
+        if word in filtered_strings:
+            await message.delete()
+            await message.channel.send(f'{message.author.mention}, what is wrong with you? That string is *not* allowed! Go to timeout!')
+            await message.author.timeout(duration, reason="Do not mention 'the bear'")
+    # a simple reply to any mentions of the bot (for future use with bardbot)
+    if bot.user.mentioned_in(message):
+        await message.channel.send("Do not @ me")
 
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user} (ID: {bot.user.id})')
     print('------')
-
 
 # Commands
 @bot.command()
@@ -133,29 +155,5 @@ async def play(ctx, video_url):
     else:
         await ctx.send("You need to be in a voice channel to use this command.")
     await ctx.message.delete()
-
-# events 
-@bot.event
-async def on_message(message):
-    # this await ensures that the bot will wait and thus be able to continue processing commands
-    await bot.process_commands(message)
-    # if the message is from the bot, ignore it
-    if message.author == bot.user:
-        return
-    # preset the timeout time (30 seconds)
-    duration = datetime.timedelta(seconds=30)
-    # Convert the message to lowercase and remove punctuation, then check if it contains any of the filtered strings
-    scannedmsg = message.content.lower()
-    scannedmsg = scannedmsg.translate(str.maketrans('', '', string.punctuation))
-    # scan the message word by word to see if the message contains any of the filtered strings
-    for word in scannedmsg.split():
-        # if the word is in the filtered strings, delete the message and send a warning to the user
-        if word in filtered_strings:
-            await message.delete()
-            await message.channel.send(f'{message.author.mention}, what is wrong with you? That string is *not* allowed! Go to timeout!')
-            await message.author.timeout(duration, reason="Do not mention 'the bear'")
-    # a simple reply to any mentions of the bot (for future use with bardbot)
-    if bot.user.mentioned_in(message):
-        await message.channel.send("Do not @ me")
 
 bot.run(token)
