@@ -62,3 +62,7 @@ pip install discord pynacl
 - Image identification 
    - Connect to API of bannable images 
    - Create a ML algorithm to identify pictures and timeout users for posting them
+- Play Uno
+   - Turn order 
+   - Player hands 
+   - Draw cards 
