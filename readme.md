@@ -66,3 +66,4 @@ pip install discord pynacl
    - Turn order 
    - Player hands 
    - Draw cards 
+- Play tik-tak-toe
