@@ -18,7 +18,7 @@ intents = discord.Intents.default()
 intents.members = True
 intents.message_content = True
 
-bot = commands.Bot(command_prefix=':V ', description=description, intents=intents)
+bot = commands.Bot(command_prefix=[':V ',':v ', ':V',':v'], description=description, intents=intents)
 
 # load in json file 
 # import internals from json
@@ -38,7 +38,7 @@ async def on_message(message):
     # if the message is from the bot, ignore it
     if message.author == bot.user:
         return
-    # preset the timeout time (30 seconds)
+    # preset the timeout time (5 seconds)
     duration = datetime.timedelta(seconds=5)
     # Convert the message to lowercase and remove punctuation, then check if it contains any of the filtered strings
     # scan the message word by word to see if the message contains any of the filtered strings
