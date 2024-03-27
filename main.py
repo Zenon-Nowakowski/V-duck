@@ -1,14 +1,23 @@
 # This example requires the 'members' and 'message_content' privileged intents to function.
 
+#Discord imports 
 import discord
 from discord.ext import commands
+from discord import FFmpegPCMAudio, PCMVolumeTransformer
 import random
-import random 
+# File manipulation
 import json 
+from pytube import YouTube 
+# Generics 
 import string
 import datetime
+import os
+
+# Custom imports 
 from filteralg import filtering_algorithm
-import string
+
+# FFMPEG_OPTIONS being set, this is for the play command
+FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5','options': '-vn'}
 
 description = '''This is V-duck, a silly discord bot. 
 The command prefix is `:V ` (including the white space after :V).
@@ -17,6 +26,7 @@ The command prefix is `:V ` (including the white space after :V).
 intents = discord.Intents.default()
 intents.members = True
 intents.message_content = True
+playlist = []
 
 bot = commands.Bot(command_prefix=[':V ',':v ', ':V',':v'], description=description, intents=intents)
 
@@ -90,7 +100,6 @@ async def joined(ctx, member: discord.Member):
     await ctx.message.delete()
 
 @bot.command()
-@commands.has_permissions(administrator=True)
 async def echo(ctx, *, content):
     '''basic echo command, by use of admins only'''
     await ctx.send(content)
@@ -104,17 +113,17 @@ async def join(ctx):
         await voice_channel_requested.connect()
     else:
         await ctx.send("Where are you? (and I'm so sorry!)")
-    await ctx.message.delete()
 
 @bot.command()
 async def leave(ctx):
     '''Leave a voice channel'''
     voice_channel_source = ctx.guild.voice_client
     if voice_channel_source:
+        for file in os.listdir('audio/'):
+                os.remove(f'audio/{file}')
         await voice_channel_source.disconnect()
     else:
         await ctx.send("I am not connected to a voice channel :/")
-    await ctx.message.delete()
 
 @bot.command()
 async def filter_list(ctx):
@@ -125,7 +134,7 @@ async def filter_list(ctx):
 @bot.command()
 async def copypasta(ctx):
     '''sends a message of a random copy pasta from the json file'''
-    # impor the copypasta json file 
+    # import the copypasta json file 
     with open("copypasta.json") as jsonFile:
         mega = json.load(jsonFile)
         data = mega["copyastas"]
@@ -134,5 +143,32 @@ async def copypasta(ctx):
     message = f"# {(pasta)['name']}\n{(pasta)['text']}"
     await ctx.send(message)
     await ctx.message.delete()
+
+@bot.command()
+async def play(ctx, *, content):
+    '''Plays a youtube video'''
+    voice_channel_requested = ctx.author.voice.channel
+    if not ctx.voice_client:
+        await join(ctx)
+    #download from youtube
+    yt = YouTube(content,
+                 use_oauth=True,
+                 allow_oauth_cache=True
+                 ).streams.filter(only_audio=True).first().download('audio/', filename=f'{len(playlist)}.mp3')
+    #add to playlist
+    playlist.append(f'audio/{len(playlist)}.mp3')
+    try:
+        # if the bot is not playing anything, play the song
+        if not ctx.voice_client.is_playing():
+            source = FFmpegPCMAudio(playlist[len(playlist)-1], executable="ffmpeg")
+            ctx.voice_client.play(source, after=Finished(ctx))
+            print(f"playlist:{playlist}")
+            if len(playlist) == 0 and not ctx.voice_client.is_playing():
+                await leave(ctx)
+    except Exception as e:
+        print(e)
+# what happens after a song is finished
+def Finished(ctx):
+    playlist.pop(0)
 
 bot.run(token)

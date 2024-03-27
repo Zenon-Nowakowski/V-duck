@@ -28,7 +28,19 @@ whereas the format for the internal.json file is:
 ## Dependencies 
 The bot requires the following dependencies: 
 ```shell 
-pip install discord pynacl
+pip install discord pynacl pytube ffmpeg
+```
+### Additional dependency notes
+You will need to download ffmpeg in addition to the library 
+# Running remotly 
+If you plan on running this bot on a raspi here is the SSH command to let it run indefinatly, as well as shutting it down. I reccommend tmux for session hosting, like so.
+```shell
+tmux new -s bot
+tmux detach
+```
+reconnect with: 
+```shell
+tmux a -t bot
 ```
 # Features 
 - Word filtering: 
@@ -43,6 +55,8 @@ pip install discord pynacl
 - Responds to @ mentions (currently very limited)
 - Copypasta
    - A user may ask the bot to provide a copypasta from internals
+- play audio
+   - currently very buggy, needs more testing. 
 # TODO
 - Meme implementation 
    - Better copy pasta generation (api/web)
@@ -51,7 +65,7 @@ pip install discord pynacl
    - Intake user voice and timeout users who say certain words
 - Better dice rolling (modifiers and giving totals)
 - Media player
-   - play mp4 from source URL
+   - Fix audio queuing 
 - Reply to @'s more dynamically
    - Chat bot, most likely utilizing Googles Gemini
 - Improve filtering
