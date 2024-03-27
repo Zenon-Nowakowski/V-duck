@@ -115,13 +115,14 @@ async def join(ctx):
         await ctx.send("Where are you? (and I'm so sorry!)")
 
 @bot.command()
-async def leave(ctx):
-    '''Leave a voice channel'''
+async def getout(ctx):
+    '''leaves a voice channel'''
     voice_channel_source = ctx.guild.voice_client
     if voice_channel_source:
-        for file in os.listdir('audio/'):
-                os.remove(f'audio/{file}')
         await voice_channel_source.disconnect()
+        if os.path.exists('audio/'):
+            for file in os.listdir('audio/'):
+                    os.remove(f'audio/{file}')
     else:
         await ctx.send("I am not connected to a voice channel :/")
 
@@ -164,7 +165,7 @@ async def play(ctx, *, content):
             ctx.voice_client.play(source, after=Finished(ctx))
             print(f"playlist:{playlist}")
             if len(playlist) == 0 and not ctx.voice_client.is_playing():
-                await leave(ctx)
+                await getout(ctx)
     except Exception as e:
         print(e)
 # what happens after a song is finished
