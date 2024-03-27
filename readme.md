@@ -65,7 +65,11 @@ tmux a -t bot
    - Intake user voice and timeout users who say certain words
 - Better dice rolling (modifiers and giving totals)
 - Media player
-   - Fix audio queuing 
+   - Fix audio queuing
+   - Pause/Unpause, skip 
+      - none admin vote skip 
+   - Audio controls  
+- Riot games API integration 
 - Reply to @'s more dynamically
    - Chat bot, most likely utilizing Googles Gemini
 - Improve filtering
