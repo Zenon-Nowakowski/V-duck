@@ -44,7 +44,7 @@ tmux a -t bot
 ```
 # Features 
 - Word filtering: 
-   - In the internal.json file there shoud be a filtered_strings array, which will be read and any message containing a filtered word will result in an automatic timeout. 
+   - In the internal.json file there should be a filtered_strings array, which will be read and any message containing a filtered word will result in an automatic timeout. 
    - Filtering is prossessed through filteralg.py and must be similar by a factor of 80% to the filter list in order to be filtered. 
 - Dice rolling 
    - Simple NdN format
