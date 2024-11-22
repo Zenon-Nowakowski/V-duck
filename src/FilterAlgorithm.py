@@ -2,10 +2,12 @@ import difflib
 import json
 import string
 
-def filtering_algorithm(message, user):
-    with open("internal.json") as jsonFile:
+def FilterAlgorithm(message, user):
+    print("hit the alg :D")
+    with open("config/config.json") as jsonFile:
         d = json.load(jsonFile)
-        data = d["filtered_strings"]
+        data = d["FilteredStrings"]
+    print("the data is: " + ''.join(data))
     for word in message.split():
         difference = difflib.get_close_matches(word, data, n=1, cutoff=0.8)
         if difference == []:
