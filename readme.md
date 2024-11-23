@@ -6,7 +6,7 @@ A silly discord bot for personal use.
    ```shell
    git clone https://github.com/your-username/your-repo.git
    ```
-2. Set up copypasta.json and internal.json 
+2. Set up copypasta.json and config.json 
 The format for the copypasta.json is: 
 ```json
 {
@@ -19,21 +19,19 @@ The format for the copypasta.json is:
 ]
 }
 ```
-whereas the format for the internal.json file is: 
+whereas the format for the config.json file is: 
 ```json
 
 {"token": "mytoken",
-"filtered_strings":["filter1", "filter2", "filter3", "etc"]}
+"FilteredStrings":["filter1", "filter2", "filter3", "etc"]}
 ```
 ## Dependencies 
 The bot requires the following dependencies: 
 ```shell 
-pip install discord pynacl pytube ffmpeg
+pip install discord
 ```
-### Additional dependency notes
-You will need to download ffmpeg in addition to the library 
 # Running remotly 
-If you plan on running this bot on a raspi here is the SSH command to let it run indefinatly, as well as shutting it down. I reccommend tmux for session hosting, like so.
+If you plan on running this bot on a raspberry pi here is the SSH command to let it run indefinitely, as well as shutting it down. I recommend tmux for session hosting, like so.
 ```shell
 tmux new -s bot
 tmux detach
@@ -42,21 +40,18 @@ reconnect with:
 ```shell
 tmux a -t bot
 ```
+Alternatively raspberry pi now has support for their own ssh and desktop view tools.
 # Features 
 - Word filtering: 
-   - In the internal.json file there should be a filtered_strings array, which will be read and any message containing a filtered word will result in an automatic timeout. 
-   - Filtering is prossessed through filteralg.py and must be similar by a factor of 80% to the filter list in order to be filtered. 
+   - In the config.json file there should be a FilteredStrings array, which will be read and any message containing a filtered word will result in an automatic timeout. 
+   - Filtering is processed through config.py and must be similar by a factor of 80% to the filter list in order to be filtered. 
 - Dice rolling 
    - Simple NdN format
 - echo 
    - the echo command will, echo, whatever the string following the command is 
-- leave/join 
-   - can join and leave voicecall (essentially subcommands code for use in more complex systems such as the play command)
 - Responds to @ mentions (currently very limited)
 - Copypasta
-   - A user may ask the bot to provide a copypasta from internals
-- play audio
-   - currently very buggy, needs more testing. 
+   - A user may ask the bot to provide a copypasta from configs
 # TODO
 - Meme implementation 
    - Better copy pasta generation (api/web)
@@ -70,6 +65,7 @@ tmux a -t bot
       - none admin vote skip 
    - Audio controls  
 - Riot games API integration 
+- steam api integration
 - Reply to @'s more dynamically
    - Chat bot, most likely utilizing Googles Gemini
 - Improve filtering
@@ -80,8 +76,7 @@ tmux a -t bot
 - Image identification 
    - Connect to API of bannable images 
    - Create a ML algorithm to identify pictures and timeout users for posting them
-- Play Uno
-   - Turn order 
-   - Player hands 
-   - Draw cards 
 - Play tik-tak-toe
+- Trivia
+- Events 
+- Challenges (games or personal) 
