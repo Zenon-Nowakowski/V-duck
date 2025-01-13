@@ -85,3 +85,8 @@ tmux a -t bot
    - Player hands 
    - Draw cards 
 - Play tik-tak-toe
+- Play tik-tak-toe
+- Trivia
+- Events 
+- Challenges (games or personal) 
+- Average RAADSar score of discord server (input validated)
